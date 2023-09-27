@@ -4,7 +4,6 @@
 
 	export let path;
 	export let firestore;
-	export let cache = true;
 
 	let data = {},
 		unsubscribe;

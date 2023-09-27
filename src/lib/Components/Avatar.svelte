@@ -19,10 +19,10 @@
 	{#if url != null}
 		<img
 			src={url}
-			alt="profile-picture"
+			alt="Profile picture"
 			height={size}
 			width={size}
-		/>
+		>
 	{:else}
 		<User size="60%" />
 	{/if}
