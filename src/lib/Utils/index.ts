@@ -1,7 +1,4 @@
-export {
-	statePresence,
-	checkPresence
-} from './ConnectionState.ts';
+export { statePresence, checkPresence } from './ConnectionState.ts';
 export { default as debounce } from './debounce.ts';
 export { default as getFirebaseUser } from './getFirebaseUser.ts';
 export { default as getLastMessage } from './getLastMessage.ts';

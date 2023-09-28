@@ -3,17 +3,12 @@
 	import { ripple } from '$lib/Effects';
 	import { Input, Strength } from '$lib/Components';
 	import { goto } from '$app/navigation';
-	import {
-		getAuth,
-		createUserWithEmailAndPassword
-	} from 'firebase/auth';
+	import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
 
 	let isPasswordVisible = false;
 
 	function togglePasswordVisibility() {
-		isPasswordVisible = isPasswordVisible
-			? false
-			: true;
+		isPasswordVisible = isPasswordVisible ? false : true;
 	}
 
 	const auth = getAuth();
@@ -26,18 +21,11 @@
 
 	async function createAccount() {
 		if (password.length < 8) {
-			alert(
-				'Password must be atleast 8 characters long.'
-			);
+			alert('Password must be atleast 8 characters long.');
 		}
 
 		try {
-			const credential =
-				await createUserWithEmailAndPassword(
-					auth,
-					email,
-					password
-				);
+			const credential = await createUserWithEmailAndPassword(auth, email, password);
 			goto('/signin');
 		} catch (error) {
 			alert('User already exists');
@@ -73,23 +61,12 @@
 			on:input={checkPasswordStrength}
 		>
 			<Icons.Lock slot="icon" size="1.4em" />
-			<button
-				class="icon"
-				slot="icon2"
-				on:click={togglePasswordVisibility}
-			>
-				<Icons.Eye
-					size="28px"
-					active={isPasswordVisible}
-				/>
+			<button class="icon" slot="icon2" on:click={togglePasswordVisibility}>
+				<Icons.Eye size="28px" active={isPasswordVisible} />
 			</button>
 		</Input>
 		<Strength {password} />
-		<button
-			class="create"
-			use:ripple
-			on:click={createAccount}>Create an account</button
-		>
+		<button class="create" use:ripple on:click={createAccount}>Create an account</button>
 	</form>
 </main>
 
@@ -142,10 +119,6 @@
 		font-family: typography.$varela-round;
 		font-size: 18px;
 		color: white;
-		background: linear-gradient(
-			90deg,
-			#7c3df5,
-			#3d4cf5
-		);
+		background: linear-gradient(90deg, #7c3df5, #3d4cf5);
 	}
 </style>

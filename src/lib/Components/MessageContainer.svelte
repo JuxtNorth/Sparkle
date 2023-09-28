@@ -1,12 +1,7 @@
 <svelte:options accessors />
 
 <script lang="ts">
-	import {
-		beforeUpdate,
-		afterUpdate,
-		onMount,
-		createEventDispatcher
-	} from 'svelte';
+	import { beforeUpdate, afterUpdate, onMount, createEventDispatcher } from 'svelte';
 	import Message from './Message.svelte';
 	import {
 		getFirestore,
@@ -30,9 +25,7 @@
           - Scroll on send.
           - Scroll on resize after send.
   */
-	let self: HTMLDivElement,
-		bottom: HTMLDivElement,
-		autoscroll: boolean;
+	let self: HTMLDivElement, bottom: HTMLDivElement, autoscroll: boolean;
 
 	function scrollToBottom(): void {
 		if (self) {
@@ -41,10 +34,7 @@
 	}
 
 	beforeUpdate(() => {
-		autoscroll =
-			self &&
-			self.offsetHeight + self.scrollTop >
-				self.scrollHeight - 20;
+		autoscroll = self && self.offsetHeight + self.scrollTop > self.scrollHeight - 20;
 	});
 
 	afterUpdate(() => {
@@ -53,11 +43,7 @@
 
 	const path = `chats/${chatID}/messages`;
 	const firestore = getFirestore(firebaseApp);
-	const query = firestoreQuery(
-		collection(firestore, path),
-		orderBy('timestamp'),
-		limit(25)
-	);
+	const query = firestoreQuery(collection(firestore, path), orderBy('timestamp'), limit(25));
 
 	onMount(async () => {
 		setTimeout(() => scrollToBottom(), 560);
@@ -71,20 +57,10 @@
 	}
 </script>
 
-<FireCollection
-	{query}
-	on:snapshot={handleSnapshot}
-	let:data
-	{firestore}
-	{path}
->
+<FireCollection {query} on:snapshot={handleSnapshot} let:data {firestore} {path}>
 	<div class="messages" bind:this={self}>
 		{#each data as { content, sender }}
-			<Message
-				{content}
-				{sender}
-				self={sender !== username}
-			/>
+			<Message {content} {sender} self={sender !== username} />
 		{/each}
 	</div>
 </FireCollection>

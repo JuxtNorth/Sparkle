@@ -16,12 +16,7 @@
 
 	async function signIn(): Promise<void> {
 		try {
-			const credential =
-				await signInWithEmailAndPassword(
-					auth,
-					email,
-					password
-				);
+			const credential = await signInWithEmailAndPassword(auth, email, password);
 			goto('/');
 		} catch (error) {
 			showWarning();
@@ -44,10 +39,7 @@
 
 	function authWithGoogle(): void {
 		const auth = getAuth();
-		signInWithPopup(
-			auth,
-			new GoogleAuthProvider()
-		).then(() => goto('/'));
+		signInWithPopup(auth, new GoogleAuthProvider()).then(() => goto('/'));
 	}
 </script>
 
@@ -80,9 +72,7 @@
 		{#if warning.length > 0}
 			<p class="warning">{warning}</p>
 		{/if}
-		<button on:click={signIn} use:ripple>
-			Sign in
-		</button>
+		<button on:click={signIn} use:ripple> Sign in </button>
 	</form>
 
 	<section class="continue-with">
@@ -130,11 +120,7 @@
 			@include button.base();
 			width: 100%;
 			height: 64px;
-			background: linear-gradient(
-				169deg,
-				#5367f7,
-				#5300b1
-			);
+			background: linear-gradient(169deg, #5367f7, #5300b1);
 			color: #d0d8e6;
 			font-family: typography.$comfortaa;
 			font-size: 18px;

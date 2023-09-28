@@ -1,9 +1,4 @@
-import {
-	getFirestore,
-	doc,
-	getDoc,
-	updateDoc
-} from 'firebase/firestore';
+import { getFirestore, doc, getDoc, updateDoc } from 'firebase/firestore';
 import firebaseApp from '$lib/firebaseInit.ts';
 
 const db = getFirestore(firebaseApp);
@@ -20,7 +15,7 @@ async function setProfilePicture({ uid, photoURL }) {
 			throw new Error('Profile Picture already exists');
 		}
 	} catch (error) {
-	  //	console.info('Cannot overwrite profile: ', error);
+		//	console.info('Cannot overwrite profile: ', error);
 	}
 }
 

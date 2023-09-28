@@ -11,17 +11,8 @@
 	import firebaseApp from '$lib/firebaseInit.ts';
 	import { firebaseUser as user } from '$lib/stores';
 	import type { User } from 'firebase/auth';
-	import {
-		getAuth,
-		signOut,
-		updateProfile
-	} from 'firebase/auth';
-	import {
-		getFirestore,
-		getDoc,
-		doc,
-		writeBatch
-	} from 'firebase/firestore';
+	import { getAuth, signOut, updateProfile } from 'firebase/auth';
+	import { getFirestore, getDoc, doc, writeBatch } from 'firebase/firestore';
 	import { debounce } from '$lib/Utils';
 
 	const db = getFirestore(firebaseApp);
@@ -80,10 +71,7 @@
 		}
 	}
 
-	function updateUsernameState(
-		username: string,
-		exists: boolean
-	): string {
+	function updateUsernameState(username: string, exists: boolean): string {
 		username = username.trim();
 
 		let state = '';
@@ -93,16 +81,14 @@
 		} else if (username.length < 3) {
 			state = 'Username must be atleast 3 characters.';
 		} else if (username.length > 15) {
-			state =
-				'Username must have less than 15 characters.';
+			state = 'Username must have less than 15 characters.';
 		}
 
 		const regexNoSymbols = /^[A-Za-z0-9_-]*$/;
 		const isValid = username.match(regexNoSymbols);
 
 		if (!isValid) {
-			state =
-				'Username must not include any special characters.';
+			state = 'Username must not include any special characters.';
 		}
 
 		return state;
@@ -125,11 +111,7 @@
 	</div>
 	<p>Add a profile picture</p>
 	<form>
-		<Input
-			placeholder="Enter a username"
-			bind:value={username}
-			on:input={handleInput}
-		>
+		<Input placeholder="Enter a username" bind:value={username} on:input={handleInput}>
 			<Icons.User slot="icon" size="1.2em" />
 		</Input>
 		{#if state.length > 0}
@@ -137,11 +119,7 @@
 		{:else if exists}
 			<p>Username already exists.</p>
 		{/if}
-		<button
-			class="continue"
-			use:ripple
-			on:click={setupProfile}>Continue</button
-		>
+		<button class="continue" use:ripple on:click={setupProfile}>Continue</button>
 	</form>
 </main>
 
@@ -206,11 +184,7 @@
 		@include button.base();
 		@include button.big();
 		font-size: typography.$mid;
-		background: linear-gradient(
-			90deg,
-			#7c3df5,
-			#3d4cf5
-		);
+		background: linear-gradient(90deg, #7c3df5, #3d4cf5);
 		color: white;
 		font-family: typography.$varela-round;
 	}

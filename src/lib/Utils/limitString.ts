@@ -1,8 +1,4 @@
-function limitString(
-	str: string,
-	maxLength: number,
-	postfix = ''
-): string {
+function limitString(str: string, maxLength: number, postfix = ''): string {
 	let out;
 	if (str.length > maxLength) {
 		out = str.slice(0, maxLength) + postfix;

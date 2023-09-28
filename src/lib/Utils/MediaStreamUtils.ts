@@ -1,8 +1,4 @@
-import {
-	remoteStream,
-	localStream,
-	peerInstance
-} from '$lib/stores';
+import { remoteStream, localStream, peerInstance } from '$lib/stores';
 import { get } from 'svelte/store';
 import type { Peer } from 'peerjs';
 import { getFirebaseUser } from '$lib/Utils';
@@ -24,31 +20,19 @@ async function getNewPeerInstance(): Promise<Peer> {
 	return peer;
 }
 
-async function getUserMedia(
-	type: MediaType
-): Promise<void | MediaStream> {
+async function getUserMedia(type: MediaType): Promise<void | MediaStream> {
 	try {
 		if (!['voice', 'video'].includes(type)) {
-			throw new Error(
-				'Unsupported Media type: ' + type
-			);
+			throw new Error('Unsupported Media type: ' + type);
 		}
 		if (window?.navigator == null) {
-			throw new Error(
-				'This function can only be invoked on the client side'
-			);
+			throw new Error('This function can only be invoked on the client side');
 		}
 		const streamConfigs = {
 			audio: true,
-			video:
-				type === 'video'
-					? { width: 1920, height: 1080 }
-					: false
+			video: type === 'video' ? { width: 1920, height: 1080 } : false
 		};
-		const stream =
-			await navigator.mediaDevices.getUserMedia(
-				streamConfigs
-			);
+		const stream = await navigator.mediaDevices.getUserMedia(streamConfigs);
 		localStream.set(stream);
 		return stream;
 	} catch (error) {
@@ -63,9 +47,7 @@ async function call(
 	onClose: () => void
 ): Promise<any> {
 	try {
-		const stream = <MediaStream>(
-			await getUserMedia(type)
-		);
+		const stream = <MediaStream>await getUserMedia(type);
 		const peer = await getPeerInstance();
 		const self = await getFirebaseUser();
 		const call = peer.call(peerID, stream, {

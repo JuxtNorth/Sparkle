@@ -1,11 +1,6 @@
 import { writable } from 'svelte/store';
 
-export type state =
-	| 'calling'
-	| 'call-recieved'
-	| 'call-ended'
-	| 'call-accepted'
-	| null;
+export type state = 'calling' | 'call-recieved' | 'call-ended' | 'call-accepted' | null;
 export const callState = writable<state>();
 
 export const firebaseUser = writable();

@@ -8,36 +8,16 @@ import {
 } from './MediaStreamUtils.ts';
 import type { Peer, MediaConnection } from 'peerjs';
 import { toast, inCallWith } from '$lib/stores';
-import {
-	getDatabase,
-	ref,
-	get,
-	set,
-	onValue,
-	onDisconnect
-} from 'firebase/database';
-import {
-	getFirestore,
-	onSnapshot,
-	doc,
-	updateDoc
-} from 'firebase/firestore';
+import { getDatabase, ref, get, set, onValue, onDisconnect } from 'firebase/database';
+import { getFirestore, onSnapshot, doc, updateDoc } from 'firebase/firestore';
 import firebaseApp from '$lib/firebaseInit.ts';
 import { get as readStore } from 'svelte/store';
 
-type EventName =
-	| 'open'
-	| 'request'
-	| 'accept'
-	| 'reject'
-	| 'close';
+type EventName = 'open' | 'request' | 'accept' | 'reject' | 'close';
 type RequestType = 'toSelf' | 'bySelf';
 
 type OpenCallback = (string) => void;
-type RequestCallback = (
-	RequestType,
-	MediaStream
-) => Promise<boolean>;
+type RequestCallback = (RequestType, MediaStream) => Promise<boolean>;
 type AcceptCallback = (MediaStream) => void;
 type RejectCallback = () => void;
 type CloseCallback = () => void;
@@ -80,25 +60,19 @@ class MediaStreamer {
 		remotePeerUsername: string,
 		type: MediaType
 	): Promise<void> {
-		const {
-			peer,
-			onRequest,
-			onAccept,
-			onClose,
-			selfUsername
-		} = this;
+		const { peer, onRequest, onAccept, onClose, selfUsername } = this;
 
 		if (remotePeerUsername === selfUsername) {
 			toast.set('');
 			toast.set('Cannot call self');
 			return;
 		}
-		
+
 		const status = await get(this.mediaConnectionStatusRef);
-		
-		if(status === 'busy') {
-		  toast.set('');
-		  toast.set('Already in a call');
+
+		if (status === 'busy') {
+			toast.set('');
+			toast.set('Already in a call');
 		}
 
 		inCallWith.set(remotePeerUsername);
@@ -115,24 +89,18 @@ class MediaStreamer {
 
 		let statusChangedOnce = false;
 
-		const remotePeerStatusRef = ref(
-			db,
-			`users/${remotePeerUsername}/mediaConnectionStatus`
-		);
-		const unsubscribe = onValue(
-			remotePeerStatusRef,
-			(snap) => {
-				const value = snap.val();
-				if (value === 'busy' && !statusChangedOnce) {
-				  statusChangedOnce = true;
-				}
-				if (statusChangedOnce && value !== 'busy') {
-				  toast.set('Call rejected');
-				  unsubscribe();
-				  this.endCall();
-				}
+		const remotePeerStatusRef = ref(db, `users/${remotePeerUsername}/mediaConnectionStatus`);
+		const unsubscribe = onValue(remotePeerStatusRef, (snap) => {
+			const value = snap.val();
+			if (value === 'busy' && !statusChangedOnce) {
+				statusChangedOnce = true;
 			}
-		);
+			if (statusChangedOnce && value !== 'busy') {
+				toast.set('Call rejected');
+				unsubscribe();
+				this.endCall();
+			}
+		});
 
 		this.call = call;
 
@@ -184,14 +152,7 @@ class MediaStreamer {
 	}
 
 	async addEventListeners() {
-		const {
-			peer,
-			onOpen,
-			onRequest,
-			onAccept,
-			onReject,
-			onClose
-		} = this;
+		const { peer, onOpen, onRequest, onAccept, onReject, onClose } = this;
 
 		peer.on('open', (id) => {
 			this.peerConnectionID = id;
@@ -207,34 +168,23 @@ class MediaStreamer {
 
 			inCallWith.set(username);
 			// Use this to listen to changes to db and call the close method accordingly.
-			const remotePeerStatusRef = ref(
-				db,
-				`users/${username}/mediaConnectionStatus`
-			);
+			const remotePeerStatusRef = ref(db, `users/${username}/mediaConnectionStatus`);
 
-			const unsubscribe = onValue(
-				remotePeerStatusRef,
-				(snap) => {
-					console.log(snap.val());
-					if (snap.val() !== 'busy') {
-						unsubscribe();
-						toast.set('Call cancelled');
-						this.showAvailableStatus();
-						if (onClose) onClose();
-					}
+			const unsubscribe = onValue(remotePeerStatusRef, (snap) => {
+				console.log(snap.val());
+				if (snap.val() !== 'busy') {
+					unsubscribe();
+					toast.set('Call cancelled');
+					this.showAvailableStatus();
+					if (onClose) onClose();
 				}
-			);
+			});
 
 			if (onRequest) {
-				const accepted = await onRequest(
-					'toSelf',
-					call
-				);
+				const accepted = await onRequest('toSelf', call);
 				unsubscribe();
 				if (accepted) {
-					const stream = await getUserMedia(
-						call.metadata.type
-					);
+					const stream = await getUserMedia(call.metadata.type);
 					this.localStream = stream;
 					call.answer(stream);
 				} else {
@@ -259,13 +209,11 @@ class MediaStreamer {
 
 	disconnect() {
 		if (this.call) {
-		  this.disposeLocalStream();
+			this.disposeLocalStream();
 			this.call.close();
 			this.showAvailableStatus();
 		} else {
-			console.error(
-				'Unexpected end call invocation, call does no exist.'
-			);
+			console.error('Unexpected end call invocation, call does no exist.');
 		}
 	}
 
@@ -290,11 +238,4 @@ class MediaStreamer {
 	}
 }
 
-/*
-Known Issues:
-  - If caller's call disconnects before callee accepts the call, callee's close event is not called. (fixed)
-  
-  - If Callee rejects a callers call using mediaConnection.close, caller's close method is not fired.
-  
-*/
 export default MediaStreamer;

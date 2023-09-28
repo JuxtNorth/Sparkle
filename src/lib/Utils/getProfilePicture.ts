@@ -1,21 +1,10 @@
-import {
-	getFirestore,
-	doc,
-	getDoc,
-	query,
-	getDocs,
-	where,
-	collection
-} from 'firebase/firestore';
+import { getFirestore, doc, getDoc, query, getDocs, where, collection } from 'firebase/firestore';
 import firebaseApp from '$lib/firebaseInit.ts';
 
 const cache = new Map();
 const db = getFirestore(firebaseApp);
 
-async function getProfilePicture(
-	id: string,
-	isUID = false
-): Promise<void | string> {
+async function getProfilePicture(id: string, isUID = false): Promise<void | string> {
 	const photoURL = cache.get(id);
 	if (photoURL) return photoURL;
 
@@ -31,10 +20,7 @@ async function getProfilePicture(
 			return photoURL;
 		} else {
 			const usersRef = collection(db, 'users');
-			const q = query(
-				usersRef,
-				where('username', '==', id)
-			);
+			const q = query(usersRef, where('username', '==', id));
 			const snap = await getDocs(q);
 			const { photoURL } = snap.docs[0].data();
 			if (!photoURL) {
@@ -44,7 +30,7 @@ async function getProfilePicture(
 			return photoURL;
 		}
 	} catch (error) {
-	//	console.info(error);
+		//	console.info(error);
 	}
 }
 

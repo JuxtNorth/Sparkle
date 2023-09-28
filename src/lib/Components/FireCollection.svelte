@@ -1,14 +1,6 @@
 <script>
-	import {
-		onMount,
-		onDestroy,
-		createEventDispatcher
-	} from 'svelte';
-	import {
-		collection,
-		onSnapshot,
-		query as firebaseQuery
-	} from 'firebase/firestore';
+	import { onMount, onDestroy, createEventDispatcher } from 'svelte';
+	import { collection, onSnapshot, query as firebaseQuery } from 'firebase/firestore';
 
 	export let path;
 	export let firestore;

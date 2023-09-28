@@ -12,17 +12,9 @@
 	}
 </script>
 
-<button
-	on:click={handleClick}
-	style="height: {size}; width: {size}"
->
+<button on:click={handleClick} style="height: {size}; width: {size}">
 	{#if url != null}
-		<img
-			src={url}
-			alt="Profile picture"
-			height={size}
-			width={size}
-		>
+		<img src={url} alt="Profile picture" height={size} width={size} />
 	{:else}
 		<User size="60%" />
 	{/if}

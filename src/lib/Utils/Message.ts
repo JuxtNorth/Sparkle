@@ -1,7 +1,4 @@
-import {
-	serverTimestamp,
-	addDoc
-} from 'firebase/firestore';
+import { serverTimestamp, addDoc } from 'firebase/firestore';
 
 type MessageType = 'text' | 'peer_request';
 
@@ -43,9 +40,7 @@ class Message {
 
 	public addMessage(message: string): void {
 		if (this.type === 'peer_request') {
-			console.error(
-				`A peer request message object cannot have more than one ids in it's content`
-			);
+			console.error(`A peer request message object cannot have more than one ids in it's content`);
 			return;
 		}
 		this.content.push(message);

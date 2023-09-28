@@ -7,12 +7,7 @@
 	export let active = true;
 </script>
 
-<svg
-	xmlns="http://www.w3.org/2000/svg"
-	{height}
-	{width}
-	{viewBox}
->
+<svg xmlns="http://www.w3.org/2000/svg" {height} {width} {viewBox}>
 	<!--! Font Awesome Pro 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
 	{#if active}
 		<path

@@ -45,9 +45,7 @@ class Timer {
 		const se = this.format(s);
 
 		return (
-			(hr.length ? hr + ' : ' : '') +
-			(mi.length ? mi + ' : ' : '00 : ') +
-			(se.length ? se : '00')
+			(hr.length ? hr + ' : ' : '') + (mi.length ? mi + ' : ' : '00 : ') + (se.length ? se : '00')
 		);
 	}
 

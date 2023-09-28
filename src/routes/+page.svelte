@@ -1,10 +1,7 @@
 <script>
 	import { firebaseUser } from '$lib/stores';
 	import firebaseApp from '$lib/firebaseInit.ts';
-	import {
-		getAuth,
-		onAuthStateChanged
-	} from 'firebase/auth';
+	import { getAuth, onAuthStateChanged } from 'firebase/auth';
 	import { goto } from '$app/navigation';
 	import { onMount } from 'svelte';
 	import '@fontsource-variable/comfortaa';

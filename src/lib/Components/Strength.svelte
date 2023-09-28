@@ -1,25 +1,12 @@
 <script lang="ts">
 	import Progress from './Progress.svelte';
-	import {
-		passwordStrength,
-		type Result
-	} from 'check-password-strength';
+	import { passwordStrength, type Result } from 'check-password-strength';
 
 	export let password = '';
 
 	const strengthLevel = [0, 0.33, 0.66, 1];
-	const colors = [
-		'#ff5959',
-		'#fe8a35',
-		'#ffe03a',
-		'#9efa5f'
-	];
-	const possible = [
-		'uppercase',
-		'lowercase',
-		'number',
-		'symbol'
-	];
+	const colors = ['#ff5959', '#fe8a35', '#ffe03a', '#9efa5f'];
+	const possible = ['uppercase', 'lowercase', 'number', 'symbol'];
 
 	function getPreposition(str: string): string {
 		return 'aeiou'.includes(str.trim()[0]) ? 'an' : 'a';
@@ -31,10 +18,7 @@
 		for (let keyword of possible) {
 			if (contains.includes(keyword)) continue;
 
-			if (
-				keyword === 'uppercase' ||
-				keyword === 'lowercase'
-			) {
+			if (keyword === 'uppercase' || keyword === 'lowercase') {
 				keyword += ' letter';
 			}
 
@@ -77,10 +61,7 @@
 		return out;
 	}
 
-	let strength: Result<any>,
-		value: number,
-		color: string,
-		suggestion: string;
+	let strength: Result<any>, value: number, color: string, suggestion: string;
 
 	$: {
 		strength = passwordStrength(password);

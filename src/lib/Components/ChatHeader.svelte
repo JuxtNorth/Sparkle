@@ -3,18 +3,8 @@
 	import * as Icons from '$lib/Icons';
 	import { ripple } from '$lib/Effects';
 	import { goto } from '$app/navigation';
-	import {
-		createEventDispatcher,
-		onMount,
-		onDestroy
-	} from 'svelte';
-	import {
-		getFirestore,
-		collection,
-		query,
-		where,
-		getDocs
-	} from 'firebase/firestore';
+	import { createEventDispatcher, onMount, onDestroy } from 'svelte';
+	import { getFirestore, collection, query, where, getDocs } from 'firebase/firestore';
 	import firebaseApp from '$lib/firebaseInit.ts';
 	import {
 		call,
@@ -23,12 +13,7 @@
 		getMediaStreamer,
 		type MediaType
 	} from '$lib/Utils';
-	import {
-		inCallWith,
-		peerMediaCall,
-		callState,
-		toast
-	} from '$lib/stores';
+	import { inCallWith, peerMediaCall, callState, toast } from '$lib/stores';
 	import { fly } from 'svelte/transition';
 
 	export let username: string;
@@ -48,10 +33,7 @@
 
 	const db = getFirestore(firebaseApp);
 	const usersRef = collection(db, 'users');
-	const q = query(
-		usersRef,
-		where('username', '==', username)
-	);
+	const q = query(usersRef, where('username', '==', username));
 
 	async function getPeerID(): Promise<void | string> {
 		const userDoc = await getDocs(q);
@@ -63,9 +45,7 @@
 		}
 	}
 
-	async function placeCall(
-		type: MediaType
-	): Promise<void> {
+	async function placeCall(type: MediaType): Promise<void> {
 		if (!isOnline) {
 			toast.set(''); // Won't update without this.
 			toast.set('User is offline');
@@ -94,11 +74,7 @@
 </script>
 
 <div class="container">
-	<button
-		class="back"
-		use:ripple={rippleProps}
-		on:click={() => dispatch('close')}
-	>
+	<button class="back" use:ripple={rippleProps} on:click={() => dispatch('close')}>
 		<Icons.ArrowLeft />
 	</button>
 	<Avatar url={profileURL} />
@@ -107,34 +83,20 @@
 		<div class="status">
 			<div class="dot" class:active={isOnline} />
 			{#if isOnline}
-				<p
-					in:fly={{ y: -10, delay: 100 }}
-					out:fly={{ y: -10, duration: 100 }}
-				>
-					online
-				</p>
+				<p in:fly={{ y: -10, delay: 100 }} out:fly={{ y: -10, duration: 100 }}>online</p>
 			{:else}
-				<p
-					in:fly={{ y: 10, delay: 100 }}
-					out:fly={{ y: 10, duration: 100 }}
-				>
-					offline
-				</p>
+				<p in:fly={{ y: 10, delay: 100 }} out:fly={{ y: 10, duration: 100 }}>offline</p>
 			{/if}
 		</div>
 	</div>
 	<div id="btns">
-	  {#if showCallButtons}
-		<button class="video" use:ripple={rippleProps}>
-			<Icons.Video />
-		</button>
-		<button
-			class="voice"
-			on:click={() => placeCall('voice')}
-			use:ripple={rippleProps}
-		>
-			<Icons.Phone />
-		</button>
+		{#if showCallButtons}
+			<button class="video" use:ripple={rippleProps}>
+				<Icons.Video />
+			</button>
+			<button class="voice" on:click={() => placeCall('voice')} use:ripple={rippleProps}>
+				<Icons.Phone />
+			</button>
 		{/if}
 		<button class="menu" use:ripple={rippleProps}>
 			<Icons.EllipsisVertical />

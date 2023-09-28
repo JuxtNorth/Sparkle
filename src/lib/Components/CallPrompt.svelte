@@ -3,19 +3,9 @@
 	import { Avatar } from '$lib/Components';
 	import { ripple } from '$lib/Effects';
 	import { fly } from 'svelte/transition';
-	import {
-		createEventDispatcher,
-		onMount
-	} from 'svelte';
+	import { createEventDispatcher, onMount } from 'svelte';
 	import type { Peer } from 'peerjs';
-	import {
-		getFirestore,
-		onSnapshot,
-		query,
-		orderBy,
-		doc,
-		updateDoc
-	} from 'firebase/firestore';
+	import { getFirestore, onSnapshot, query, orderBy, doc, updateDoc } from 'firebase/firestore';
 	import firebaseApp from '$lib/firebaseInit.ts';
 	import {
 		getFirebaseUser,
@@ -46,11 +36,7 @@
 		timerString = timestamp;
 	});
 
-	let state:
-		| 'calling'
-		| 'call-recieved'
-		| 'call-accepted'
-		| null;
+	let state: 'calling' | 'call-recieved' | 'call-accepted' | null;
 
 	let audioElem: HTMLAudioElement;
 
@@ -135,9 +121,7 @@
 	}
 
 	$: if ($inCallWith?.length > 0)
-		getProfilePicture($inCallWith).then(
-			(url) => (caleePhotoURL = url)
-		);
+		getProfilePicture($inCallWith).then((url) => (caleePhotoURL = url));
 </script>
 
 <audio bind:this={audioElem} />
@@ -154,11 +138,7 @@
 {/if}
 
 {#if $callState && !promptMinimised}
-	<div
-		class="container"
-		in:fly={{ y: -200 }}
-		out:fly={{ y: -200 }}
-	>
+	<div class="container" in:fly={{ y: -200 }} out:fly={{ y: -200 }}>
 		<div class="avatar">
 			<Avatar url={caleePhotoURL} size="64px" />
 		</div>
@@ -168,18 +148,10 @@
 				<p class="name">{$inCallWith}</p>
 			</div>
 			<div class="buttons">
-				<button
-					id="reject"
-					use:ripple
-					on:click={reject}
-				>
+				<button id="reject" use:ripple on:click={reject}>
 					<Icons.Phone size="1.6em" />
 				</button>
-				<button
-					id="accept"
-					use:ripple
-					on:click={accept}
-				>
+				<button id="accept" use:ripple on:click={accept}>
 					<Icons.Phone size="1.6em" />
 				</button>
 			</div>
@@ -196,18 +168,10 @@
 				</div>
 			{/if}
 			<div class="buttons">
-				<button
-					id="reject"
-					on:click={() => streamer.endCall()}
-					use:ripple
-				>
+				<button id="reject" on:click={() => streamer.endCall()} use:ripple>
 					<Icons.Phone size="1.6em" />
 				</button>
-				<button
-					id="mute"
-					use:ripple
-					on:click={toggleMuteState}
-				>
+				<button id="mute" use:ripple on:click={toggleMuteState}>
 					{#if selfMuted}
 						<Icons.Mute size="1.85em" />
 					{:else}

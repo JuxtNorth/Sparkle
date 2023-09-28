@@ -47,23 +47,10 @@
 </script>
 
 {#if isVisible}
-	<div
-		class="container"
-		in:fly={{ y: 50, duration: 100 }}
-		out:fly={{ y: 50, duration: 100 }}
-	>
+	<div class="container" in:fly={{ y: 50, duration: 100 }} out:fly={{ y: 50, duration: 100 }}>
 		<div class="main">
-			<div
-				class="text-area-container"
-				bind:this={ta_frame}
-			>
-				<textarea
-					rows="1"
-					placeholder="Message"
-					on:keydown={resize}
-					bind:value
-					bind:this={ta}
-				/>
+			<div class="text-area-container" bind:this={ta_frame}>
+				<textarea rows="1" placeholder="Message" on:keydown={resize} bind:value bind:this={ta} />
 			</div>
 			<button
 				id="attachment-btn"
@@ -77,19 +64,11 @@
 		</div>
 		<button id="send-btn" on:click={send}>
 			{#if value.trim().length === 0}
-				<div
-					id="mic"
-					in:fly={{ duration: 80, y: -20 }}
-					out:fly={{ duration: 80, y: -20 }}
-				>
+				<div id="mic" in:fly={{ duration: 80, y: -20 }} out:fly={{ duration: 80, y: -20 }}>
 					<Icons.Microphone />
 				</div>
 			{:else}
-				<div
-					id="send"
-					in:fly={{ duration: 80, y: 20 }}
-					out:fly={{ duration: 80, y: 20 }}
-				>
+				<div id="send" in:fly={{ duration: 80, y: 20 }} out:fly={{ duration: 80, y: 20 }}>
 					<Icons.Send />
 				</div>
 			{/if}
@@ -114,9 +93,7 @@
 		justify-content: space-between;
 		margin-bottom: balance.$spacing;
 		div.main {
-			width: calc(
-				100% - $chatBoxHeight - balance.$spacing
-			);
+			width: calc(100% - $chatBoxHeight - balance.$spacing);
 			border-radius: $rounding;
 			background: white;
 			display: flex;

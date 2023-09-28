@@ -17,10 +17,7 @@ interface RippleOptions {
 	color?: string;
 }
 
-export function ripple(
-	node: HTMLElement,
-	options: RippleOptions = {}
-): void {
+export function ripple(node: HTMLElement, options: RippleOptions = {}): void {
 	const rect = node.getBoundingClientRect();
 
 	const handleClick = (e: MouseEvent): void => {
@@ -28,10 +25,7 @@ export function ripple(
 		span.style.cssText = styling;
 		node.appendChild(span);
 
-		const d = Math.min(
-			node.clientWidth,
-			node.clientHeight
-		);
+		const d = Math.min(node.clientWidth, node.clientHeight);
 		const r = d / 2;
 
 		Object.assign(span.style, {
@@ -48,10 +42,7 @@ export function ripple(
 			duration: options.duration || 600
 		});
 
-		setTimeout(
-			() => span.remove(),
-			options.duration || 600
-		);
+		setTimeout(() => span.remove(), options.duration || 600);
 	};
 
 	node.addEventListener('click', handleClick);

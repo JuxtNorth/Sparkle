@@ -6,26 +6,11 @@
 	import { onMount } from 'svelte';
 	import firebaseApp from '$lib/firebaseInit.ts';
 	import { getAuth, signOut } from 'firebase/auth';
-	import {
-		goto,
-		beforeNavigate,
-		afterNavigate
-	} from '$app/navigation';
-	import {
-		getFirestore,
-		doc,
-		getDoc
-	} from 'firebase/firestore';
+	import { goto, beforeNavigate, afterNavigate } from '$app/navigation';
+	import { getFirestore, doc, getDoc } from 'firebase/firestore';
 	import { fly } from 'svelte/transition';
-	import {
-		isChatOpen,
-		selfUsername
-	} from '$lib/stores';
-	import {
-		setProfilePicture,
-		getProfilePicture,
-		statePresence
-	} from '$lib/Utils';
+	import { isChatOpen, selfUsername } from '$lib/stores';
+	import { setProfilePicture, getProfilePicture, statePresence } from '$lib/Utils';
 
 	export let data;
 
@@ -42,9 +27,7 @@
 				$selfUsername = usernameDoc.data().username;
 				return $selfUsername;
 			}
-			throw new Error(
-				'Undefined User with uid: ' + uid
-			);
+			throw new Error('Undefined User with uid: ' + uid);
 		} catch (error) {
 			console.error(error);
 		}
@@ -74,9 +57,7 @@
 		}, 600);
 	});
 
-	beforeNavigate(
-		() => (isNewChatButtonVisible = false)
-	);
+	beforeNavigate(() => (isNewChatButtonVisible = false));
 
 	const path = `users/${data.self.uid}/chats`;
 
@@ -86,27 +67,12 @@
 {#if !$isChatOpen}
 	<header>
 		<h1>Sparkle</h1>
-		<Components.Avatar
-			url={data.self.photoURL}
-			on:click={() => signOut(auth)}
-		/>
+		<Components.Avatar url={data.self.photoURL} on:click={() => signOut(auth)} />
 	</header>
 
 	<section class="navigation">
-		<button
-			on:click={() => (screen = 0)}
-			class:selected={screen === 0}
-			use:ripple
-		>
-			Chats
-		</button>
-		<button
-			on:click={() => (screen = 1)}
-			class:selected={screen === 1}
-			use:ripple
-		>
-			Calls
-		</button>
+		<button on:click={() => (screen = 0)} class:selected={screen === 0} use:ripple> Chats </button>
+		<button on:click={() => (screen = 1)} class:selected={screen === 1} use:ripple> Calls </button>
 	</section>
 
 	{#if screen === 0}
@@ -122,17 +88,9 @@
 				</button>
 			</div>
 			<div class="chats">
-				<Components.FireCollection
-					let:data
-					{path}
-					firestore={db}
-				>
+				<Components.FireCollection let:data {path} firestore={db}>
 					{#each data as doc}
-						<Components.ChatButton
-							username={doc.ref.id}
-							chatID={doc.id}
-							on:click={openChat}
-						/>
+						<Components.ChatButton username={doc.ref.id} chatID={doc.id} on:click={openChat} />
 					{/each}
 				</Components.FireCollection>
 			</div>

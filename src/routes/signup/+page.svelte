@@ -5,20 +5,8 @@
 	import { onMount } from 'svelte';
 	import firebaseApp from '$lib/firebaseInit.ts';
 	import { firebaseUser } from '$lib/stores';
-	import {
-		onAuthStateChanged,
-		getAuth,
-		signInWithPopup,
-		GoogleAuthProvider
-	} from 'firebase/auth';
-	import {
-		getFirestore,
-		addDoc,
-		getDocs,
-		getDoc,
-		collection,
-		doc
-	} from 'firebase/firestore';
+	import { onAuthStateChanged, getAuth, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
+	import { getFirestore, addDoc, getDocs, getDoc, collection, doc } from 'firebase/firestore';
 
 	const db = getFirestore(firebaseApp);
 
@@ -54,12 +42,7 @@
 <div class="signup-options">
 	<h1>Welcome<br />to Sparkle!</h1>
 	<p>Create a new account.</p>
-	<button
-		class="btn-signup"
-		id="gl"
-		on:click={authWithGoogle}
-		use:ripple
-	>
+	<button class="btn-signup" id="gl" on:click={authWithGoogle} use:ripple>
 		<div class="icon"><Icons.Google /></div>
 		Sign up with Google
 	</button>
@@ -67,12 +50,7 @@
 		<div class="icon"><Icons.Facebook /></div>
 		Sign up with Facebook
 	</button>
-	<button
-		class="btn-signup"
-		id="em"
-		on:click={() => goto('/signup/signup-email')}
-		use:ripple
-	>
+	<button class="btn-signup" id="em" on:click={() => goto('/signup/signup-email')} use:ripple>
 		<div class="icon"><Icons.Email /></div>
 		Sign up with E-Mail
 	</button>

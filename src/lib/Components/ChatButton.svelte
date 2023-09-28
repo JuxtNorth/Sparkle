@@ -1,11 +1,7 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { onMount } from 'svelte';
-	import {
-		getLastMessage,
-		limitString,
-		getProfilePicture
-	} from '$lib/Utils';
+	import { getLastMessage, limitString, getProfilePicture } from '$lib/Utils';
 	import { getFirestore } from 'firebase/firestore';
 	import firebaseApp from '$lib/firebaseInit.ts';
 	import { createEventDispatcher } from 'svelte';

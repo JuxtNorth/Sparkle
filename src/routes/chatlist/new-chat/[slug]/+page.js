@@ -1,11 +1,7 @@
 import { redirect } from '@sveltejs/kit';
 import { getFirebaseUser } from '$lib/Utils';
 import firebaseApp from '$lib/firebaseInit.ts';
-import {
-	getFirestore,
-	doc,
-	getDoc
-} from 'firebase/firestore';
+import { getFirestore, doc, getDoc } from 'firebase/firestore';
 
 const db = getFirestore(firebaseApp);
 

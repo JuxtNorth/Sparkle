@@ -1,19 +1,9 @@
 <script lang="ts">
 	import * as Icons from '$lib/Icons';
 	import * as Components from '$lib/Components';
-	import {
-		goto,
-		beforeNavigate
-	} from '$app/navigation';
+	import { goto, beforeNavigate } from '$app/navigation';
 	import { onMount } from 'svelte';
-	import {
-		getFirestore,
-		collection,
-		getDoc,
-		query,
-		onSnapshot,
-		orderBy
-	} from 'firebase/firestore';
+	import { getFirestore, collection, getDoc, query, onSnapshot, orderBy } from 'firebase/firestore';
 	import firebaseApp from '$lib/firebaseInit.ts';
 	import { getFirebaseUser } from '$lib/Utils';
 
@@ -31,10 +21,7 @@
 			const self = await getFirebaseUser();
 			const path = `users/${self.uid}/requests`;
 			const requestsRef = collection(db, path);
-			const q = query(
-				requestsRef,
-				orderBy('createdAt')
-			);
+			const q = query(requestsRef, orderBy('createdAt'));
 			unsubscribe = onSnapshot(q, (snapshot) => {
 				requests = [];
 				snapshot.forEach((entry) => {

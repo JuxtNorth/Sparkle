@@ -1,10 +1,5 @@
 <script lang="ts">
-	import {
-		ChatHeader,
-		MessageContainer,
-		ChatBox,
-		FireCollection
-	} from '$lib/Components';
+	import { ChatHeader, MessageContainer, ChatBox, FireCollection } from '$lib/Components';
 	import { isChatOpen } from '$lib/stores';
 	import { onMount } from 'svelte';
 	import {
@@ -32,11 +27,7 @@
 
 	let selfUsername, lastMessage;
 	const db = getFirestore(firebaseApp);
-	const messagesRef = collection(
-		db,
-		`chats/${chatID}`,
-		'messages'
-	);
+	const messagesRef = collection(db, `chats/${chatID}`, 'messages');
 
 	onMount(async () => {
 		const self = await getFirebaseUser();
@@ -78,16 +69,8 @@
 <svelte:window on:popstate={handleBack} />
 
 <div class="container">
-	<ChatHeader
-		on:close={closeChat}
-		{username}
-		status="online"
-	/>
-	<MessageContainer
-		{chatID}
-		{username}
-		on:snapshot={handleSnaphot}
-	/>
+	<ChatHeader on:close={closeChat} {username} status="online" />
+	<MessageContainer {chatID} {username} on:snapshot={handleSnaphot} />
 	<ChatBox on:send={handleSend} />
 </div>
 

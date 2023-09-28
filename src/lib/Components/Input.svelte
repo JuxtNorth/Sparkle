@@ -5,11 +5,7 @@
 	export let name = '';
 	export let placeholder = '';
 	export let required = true;
-	export let type:
-		| 'password'
-		| 'text'
-		| 'number'
-		| 'email' = 'text';
+	export let type: 'password' | 'text' | 'number' | 'email' = 'text';
 	export let pre = '';
 	export let value = '';
 
@@ -49,9 +45,7 @@
 	{/if}
 	<input
 		class="text-input-primary"
-		style="padding-left: {$$slots.icon
-			? '64px'
-			: '32px'}"
+		style="padding-left: {$$slots.icon ? '64px' : '32px'}"
 		bind:this={self}
 		{autocomplete}
 		{name}

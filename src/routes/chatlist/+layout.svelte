@@ -3,19 +3,9 @@
 	import '@fontsource-variable/mulish';
 	import '@fontsource/varela-round';
 	import '@fontsource-variable/comfortaa';
-	import {
-		getFirebaseUser,
-		getPeerInstance,
-	} from '$lib/Utils';
-	import {
-		PageTransition,
-		CallPrompt,
-		Toast
-	} from '$lib/Components';
-	import {
-		onAuthStateChanged,
-		getAuth
-	} from 'firebase/auth';
+	import { getFirebaseUser, getPeerInstance } from '$lib/Utils';
+	import { PageTransition, CallPrompt, Toast } from '$lib/Components';
+	import { onAuthStateChanged, getAuth } from 'firebase/auth';
 	import { getFirestore } from 'firebase/firestore';
 	import { onMount } from 'svelte';
 	import firebaseApp from '$lib/firebaseInit.ts';

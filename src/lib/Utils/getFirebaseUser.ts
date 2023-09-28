@@ -1,7 +1,4 @@
-import {
-	onAuthStateChanged,
-	getAuth
-} from 'firebase/auth';
+import { onAuthStateChanged, getAuth } from 'firebase/auth';
 import { get } from 'svelte/store';
 import { firebaseUser } from '$lib/stores';
 import firebaseApp from '$lib/firebaseInit.ts';

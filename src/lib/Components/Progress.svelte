@@ -28,12 +28,7 @@
 </script>
 
 <div class="progress-container" {style}>
-	<div
-		class="progress-inner"
-		style="width: {getWidth(
-			value
-		)}; background: {color}"
-	/>
+	<div class="progress-inner" style="width: {getWidth(value)}; background: {color}" />
 </div>
 
 <style lang="scss">

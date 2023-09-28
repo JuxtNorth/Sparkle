@@ -60,11 +60,7 @@
 </header>
 
 <main>
-	<Components.Input
-		placeholder="Search users"
-		bind:value={term}
-		on:input={getSuggestions}
-	>
+	<Components.Input placeholder="Search users" bind:value={term} on:input={getSuggestions}>
 		<Icons.Search slot="icon" size="1.2em" />
 	</Components.Input>
 	<h2>Suggestions</h2>
